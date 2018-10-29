@@ -11,8 +11,8 @@ install_hooks: venv
 .PHONY: test
 test: venv
 	(. venv/bin/activate; \
-		python setup.py install; \
-		python setup.py test;\
+		coverage run venv/bin/pytest; \
+		coverage report -m --fail-under 100 --omit=venv/*;\
 	)
 
 clean:
