@@ -1,0 +1,15 @@
+div{
+	text-align: center;
+	max-width: 100%;
+}
+input{
+	font-size: 22px;
+	padding: 12px 20px;
+	margin: 10px 0;
+	border: 3px solid #555;
+	max-width: 80%;
+}
+.button{
+	padding:12px 12px;
+	
+}
