@@ -1,5 +1,5 @@
 import requests
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .constants import OUTPOST_IPS
 
 
@@ -14,6 +14,6 @@ def get_url(request, url):
     """
     all_responses = {}
     for ip in OUTPOST_IPS:
-        r = requests.get(f"{ip}/fetch?url={url}", auth=("user", "pass"))
-        all_responses.append(r)
-    return all_responses
+        r = requests.get(f"{ip}/fetch?url={url}")
+        all_responses[ip] = r.text
+    return JsonResponse(all_responses)
