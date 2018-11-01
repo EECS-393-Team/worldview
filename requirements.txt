@@ -1,4 +1,6 @@
 black
 coverage
+django
 pre-commit
 pytest
+requests
