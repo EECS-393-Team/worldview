@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'WorldView';
+  title = 'angular-worldview';
+  title_text = 'WorldView';
 }
