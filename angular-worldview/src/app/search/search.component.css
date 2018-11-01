@@ -13,3 +13,18 @@ input{
 	padding:12px 12px;
 	
 }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px 0;
+}
+.code{
+	text-align: left;
+	padding: 10px;
+    background: #D3D3D3;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}

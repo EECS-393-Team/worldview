@@ -1,8 +1,17 @@
 <div>
-  <form ng-submit="myFunc()" ng-controller="mycontroller">
+  <form (ngSubmit)="getSites()" #heroForm="ngForm">
       <label>
-        <input  placeholder="www.nytimes.com">
-        <input class="button" type="Submit">
+        <input type="text" class="form-control" id="url" [(ngModel)]="model.url" name="name"
+               #name="ngModel" required  placeholder="www.nytimes.com">
+        <input class="button" type="submit" >
       </label>
   </form>
+</div>
+<div>
+	<ul class="sites">
+	  <li *ngFor="let site of sites">
+	   <h3>{{site.url}}, {{site.location}}</h3> 
+	   <p class="code">{{site.html}}</p>
+	  </li>
+	</ul>
 </div>
