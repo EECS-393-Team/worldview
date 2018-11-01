@@ -15,5 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from worldview_backend import views
 
-urlpatterns = [path("admin/", admin.site.urls)]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("<string:url>/", views.get_url, name="get_url"),
+]
