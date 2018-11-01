@@ -19,9 +19,9 @@ export class SearchComponent implements OnInit {
 
   // Gets sites for sitesServivce
 	getSites(): void {
-	  //this.sitesService.getSites(this.model.url).subscribe(sites => this.sites = sites);
+	  this.sitesService.getSites(this.model.url).subscribe(sites => this.sites = sites);
     // Optional way of testing, pulls from constants file
-	  this.sites = SITES;
+	  //this.sites = SITES;
 	}
 
 	
