@@ -12,15 +12,21 @@ export class SearchComponent implements OnInit {
 
 	sites: Site[];
   model = new Search("www.nytimes.com")
+
 	constructor(private sitesService: SitesService) { }
+  ngOnInit() {
+  }
+
+  // Gets sites for sitesServivce
 	getSites(): void {
-	  this.sitesService.getSites(this.model.url).subscribe(sites => this.sites = sites);
-	  //this.sites = SITES;
+	  //this.sitesService.getSites(this.model.url).subscribe(sites => this.sites = sites);
+    // Optional way of testing, pulls from constants file
+	  this.sites = SITES;
 	}
 
-	ngOnInit() {
-	}
+	
 
+  // Mapping the form onSubmit to getSites and/or other needed methods
 	onSubmit() {
 	 this.getSites()
 	}
