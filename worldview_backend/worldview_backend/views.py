@@ -4,6 +4,9 @@ from .constants import OUTPOST_IPS
 
 
 def index(request):
+    """
+    The basic landing page for worldview
+    """
     return HttpResponse()
 
 
