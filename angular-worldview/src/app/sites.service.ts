@@ -19,7 +19,7 @@ export class SitesService {
   getSites (url: string): Observable<Response> {
     var escaped_url = encodeURIComponent(url);
     console.log(this.siteUrl+escaped_url);
-    return this.http.get<Response>(this.siteUrl+`${escaped_url}`+"/").pipe(tap(_ =>this),catchError(this.handleError('getSites', [])));
+    return this.http.get<Response>(this.siteUrl+`${escaped_url}`+"/").pipe(tap(_ =>this),catchError(this.handleError('getSites', new Response([],[]))));
   }
     private handleError<T> (operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {

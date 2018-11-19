@@ -11,14 +11,15 @@ import { SITES } from '../mock-sites';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-    default = "nytimes.com"
+    default = "nytimes.com";
     sites: Site[];
     response = new Response([],[]);
-    ips: string[]
+    ips: string[];
+    search_url: string;
     form: FormGroup;
     model = new Search("www.nytimes.com");
     output_text = '';
-    constructor(private sitesService: SitesService) { }
+    constructor(public sitesService: SitesService) { }
 
     ngOnInit() {
         this.form  = new FormGroup({
@@ -28,7 +29,7 @@ export class SearchComponent implements OnInit {
 
   // Gets sites for sitesServivce
     getSites(): void {
-        var url = this.form.get('url').value
+        var url = this.search_url;
         if(url == ""){
             this.output_text = "Please enter a valid url";
         }
@@ -38,7 +39,7 @@ export class SearchComponent implements OnInit {
                                                                 this.response = response;
                                                                 this.ips = Object.keys(response.html)
                                                                 console.log(this.response);
-                                                                });
+                                                                }, err => this.output_text = err.status);
             // Optional way of testing, pulls from constants file
             //this.sites = SITES;
 
@@ -49,7 +50,8 @@ export class SearchComponent implements OnInit {
 
   // Mapping the form onSubmit to getSites and/or other needed methods
     onSubmit() {
-     this.getSites()
+     this.search_url = this.form.get('url').value;
+     this.getSites();
     }
 
     toggleCollapse(id: string) {
