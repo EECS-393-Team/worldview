@@ -11,7 +11,7 @@ install_hooks: venv
 .PHONY: test
 test: venv
 	(. venv/bin/activate; \
-		coverage run venv/bin/pytest; \
+		coverage run venv/bin/pytest tests; \
 		coverage report -m --fail-under 100 --omit=venv/*;\
 	)
 
