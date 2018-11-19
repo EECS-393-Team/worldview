@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { SitesService } from '../sites.service';
 import { Site } from '../site';
+import { Response } from '../response';
 import { Search } from '../search';
 import { SITES } from '../mock-sites';
 @Component({
@@ -12,6 +13,8 @@ import { SITES } from '../mock-sites';
 export class SearchComponent implements OnInit {
     default = "nytimes.com"
     sites: Site[];
+    response = new Response([],[]);
+    ips: string[]
     form: FormGroup;
     model = new Search("www.nytimes.com");
     output_text = '';
@@ -31,9 +34,14 @@ export class SearchComponent implements OnInit {
         }
         else{
             this.output_text = "";
-            this.sitesService.getSites(url).subscribe(sites => this.sites = sites);
+            this.sitesService.getSites(url).subscribe(response => {
+                                                                this.response = response;
+                                                                this.ips = Object.keys(response.html)
+                                                                console.log(this.response);
+                                                                });
             // Optional way of testing, pulls from constants file
             //this.sites = SITES;
+
         }
     }
 
@@ -46,11 +54,11 @@ export class SearchComponent implements OnInit {
 
     toggleCollapse(id: string) {
         console.log(document.getElementById("cont"+id).style.fontSize)
-        if (document.getElementById("cont"+id).style.fontSize == "0px" ){
-            document.getElementById("cont"+id).style.fontSize = "";
+        if (document.getElementById("cont"+id).style.height == "10px" ){
+            document.getElementById("cont"+id).style.height = "";
         }
         else{
-            document.getElementById("cont"+id).style.fontSize = "0px";
+            document.getElementById("cont"+id).style.height = "10px";
         }
     }
 }

@@ -1,6 +1,7 @@
 black
 coverage
 django
+django-cors-headers
 pre-commit
 pytest
 requests
