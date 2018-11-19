@@ -27,7 +27,9 @@ def get_url(request, url):
     for ip in response_iter:
         diff_responses[ip] = diff_html(all_responses[base_ip], all_responses[ip])
     total_responses = {"html": all_responses, "diff": diff_responses}
-    return JsonResponse(total_responses)
+    response = JsonResponse(total_responses)
+    response["Access-Control-Allow-Origin"] = "localhost:4200"
+    return response
 
 
 def diff_html(base, other):

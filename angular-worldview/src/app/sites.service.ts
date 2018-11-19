@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Site } from './site';
+import { Response } from './response';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -15,10 +16,10 @@ export class SitesService {
 
   constructor(private http: HttpClient) { }
 
-  getSites (url: string): Observable<Site[]> {
+  getSites (url: string): Observable<Response> {
     var escaped_url = encodeURIComponent(url);
     console.log(this.siteUrl+escaped_url);
-    return this.http.get<Site[]>(this.siteUrl+`${escaped_url}`).pipe(tap(_ =>this),catchError(this.handleError('getSites', [])));
+    return this.http.get<Response>(this.siteUrl+`${escaped_url}`+"/").pipe(tap(_ =>this),catchError(this.handleError('getSites', [])));
   }
     private handleError<T> (operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
