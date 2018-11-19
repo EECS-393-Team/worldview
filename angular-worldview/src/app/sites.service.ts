@@ -11,18 +11,18 @@ const httpOptions = {
 })
 export class SitesService {
   //Set URL of HQ Server
-  private siteUrl = 'https://localhost:8000/';
+  private siteUrl = 'http://localhost:8000/';
 
   constructor(private http: HttpClient) { }
 
   getSites (url: string): Observable<Site[]> {
     var escaped_url = encodeURIComponent(url);
     console.log(this.siteUrl+escaped_url);
-    return this.http.get<Site[]>(this.siteUrl,{ params: new HttpParams().set('url', escaped_url) }).pipe(tap(_ =>this),catchError(this.handleError('getSites', [])));
+    return this.http.get<Site[]>(this.siteUrl+`${escaped_url}`).pipe(tap(_ =>this),catchError(this.handleError('getSites', [])));
   }
     private handleError<T> (operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
-          console.error(error); 
+          console.error(error);
           // Return empty result
           return of(result as T);
         };
