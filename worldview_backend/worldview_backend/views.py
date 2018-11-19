@@ -1,3 +1,4 @@
+from difflib import HtmlDiff
 import requests
 from django.http import HttpResponse, JsonResponse
 from .constants import OUTPOST_IPS
@@ -19,4 +20,19 @@ def get_url(request, url):
     for ip in OUTPOST_IPS:
         r = requests.get(f"{ip}/fetch?url={url}")
         all_responses[ip] = r.text
-    return JsonResponse(all_responses)
+
+    response_iter = iter(all_responses)
+    base_ip = next(response_iter)
+    diff_responses = {base_ip: ""}
+    for ip in response_iter:
+        diff_responses[ip] = diff_html(all_responses[base_ip], all_responses[ip])
+    total_responses = {"html": all_responses, "diff": diff_responses}
+    return JsonResponse(total_responses)
+
+
+def diff_html(base, other):
+    """
+    Uses difflib to construct a table that is the difference between the base and
+    all of the other returned html
+    """
+    return HtmlDiff.make_table(base, other)
