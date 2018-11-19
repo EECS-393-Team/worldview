@@ -1,17 +1,18 @@
 <div>
-  <form (ngSubmit)="getSites()" #heroForm="ngForm">
+  <form (ngSubmit)="getSites()" [formGroup]="form">
       <label>
-        <input type="text" class="form-control" id="url" [(ngModel)]="model.url" name="name"
-               #name="ngModel" required  placeholder="www.nytimes.com">
+        <input type="text" class="form-control" id="url" formControlName="url" required  placeholder='{{default}}'>
         <input class="button" type="submit" >
       </label>
+      <p>{{ output_text }}</p>
   </form>
 </div>
 <div>
 	<ul class="sites">
-	  <li *ngFor="let site of sites">
-	   <h3>{{site.url}}, {{site.location}}</h3> 
-	   <p class="code">{{site.html}}</p>
+	  <li *ngFor="let site of sites; index as i">
+	   <h3>{{site.url}} at {{site.location}}</h3>
+	   <p class="code collapsible" (click)="toggleCollapse([i])" id="cont{{i}}"> {{site.html}}</p>
+     <img src = {{site.img_url}}>
 	  </li>
 	</ul>
 </div>
