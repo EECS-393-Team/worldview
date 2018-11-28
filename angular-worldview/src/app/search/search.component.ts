@@ -11,10 +11,11 @@ import { SITES } from '../mock-sites';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-    default = "nytimes.com";
+    default = "example.com";
     sites: Site[];
-    response = new Response([],[]);
+    response: Response;
     ips: string[];
+    diff_ips: string[]
     search_url: string;
     form: FormGroup;
     model = new Search("www.nytimes.com");
@@ -30,6 +31,8 @@ export class SearchComponent implements OnInit {
   // Gets sites for sitesServivce
     getSites(): void {
         var url = this.search_url;
+        // sanitize url
+        url = url.replace(/https?:\/\//,"")
         if(url == ""){
             this.output_text = "Please enter a valid url";
         }
@@ -37,7 +40,8 @@ export class SearchComponent implements OnInit {
             this.output_text = "";
             this.sitesService.getSites(url).subscribe(response => {
                                                                 this.response = response;
-                                                                this.ips = Object.keys(response.html)
+                                                                this.ips = Object.keys(response.html);
+                                                                this.diff_ips = Object.keys(response.diff);
                                                                 console.log(this.response);
                                                                 }, err => this.output_text = err.status);
             // Optional way of testing, pulls from constants file

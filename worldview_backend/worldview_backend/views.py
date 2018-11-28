@@ -20,10 +20,11 @@ def get_url(request, url):
     for ip in OUTPOST_IPS:
         r = requests.get(f"{ip}/fetch?url={url}")
         all_responses[ip] = r.text
+        # all_responses["12,321"] = r.text
 
     response_iter = iter(all_responses)
     base_ip = next(response_iter)
-    diff_responses = {base_ip: ""}
+    diff_responses = {base_ip: "Base"}
     for ip in response_iter:
         diff_responses[ip] = diff_html(all_responses[base_ip], all_responses[ip])
     total_responses = {"html": all_responses, "diff": diff_responses}
@@ -37,4 +38,6 @@ def diff_html(base, other):
     Uses difflib to construct a table that is the difference between the base and
     all of the other returned html
     """
-    return HtmlDiff.make_table(base, other)
+    print(other)
+    diff = HtmlDiff(wrapcolumn=60)
+    return diff.make_table(fromlines=base.splitlines(), tolines=other.splitlines())
