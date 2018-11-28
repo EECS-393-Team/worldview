@@ -74,4 +74,4 @@ def compute_filename(url, base_ip, other_ip):
     """
     Computes a string which corresponds to where the image diff will be stored
     """
-    return f"{url}_{base_ip}_{other_ip}"
+    return f"{url}_{base_ip}_{other_ip}.jpg"
