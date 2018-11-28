@@ -28,7 +28,7 @@ def get_url(request, url):
     response_iter = iter(all_responses)
     base_ip = next(response_iter)
     diff_responses = {base_ip: ""}
-    image_responses[base_ip].save(compute_filename(url, base_ip, base_ip))
+    Image(image_responses[base_ip]).save(compute_filename(url, base_ip, base_ip))
     image_diff_responses = {base_ip: compute_filename(url, base_ip, base_ip)}
     for ip in response_iter:
         diff_responses[ip] = diff_html(all_responses, base_ip, ip)
