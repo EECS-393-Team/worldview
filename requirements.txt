@@ -2,6 +2,7 @@ black
 coverage
 django
 django-cors-headers
+pillow
 pre-commit
 pytest
 requests
