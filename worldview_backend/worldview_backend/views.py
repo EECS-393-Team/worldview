@@ -1,4 +1,5 @@
 from difflib import HtmlDiff
+from io import BytesIO
 import requests
 from django.http import HttpResponse, JsonResponse
 from .constants import OUTPOST_IPS
@@ -28,7 +29,9 @@ def get_url(request, url):
     response_iter = iter(all_responses)
     base_ip = next(response_iter)
     diff_responses = {base_ip: ""}
-    Image.open(image_responses[base_ip]).save(compute_filename(url, base_ip, base_ip))
+    Image.open(BytesIO(image_responses[base_ip])).save(
+        compute_filename(url, base_ip, base_ip)
+    )
     image_diff_responses = {base_ip: compute_filename(url, base_ip, base_ip)}
     for ip in response_iter:
         diff_responses[ip] = diff_html(all_responses, base_ip, ip)
@@ -60,8 +63,8 @@ def diff_image(image_dict, base_ip, other_ip, url):
     """
     Uses pillow's image diffing feature to compare the two screenshots returns a file
     """
-    base_image = Image.open(image_dict[base_ip])
-    other_image = Image.open(image_dict[other_ip])
+    base_image = Image.open(BytesIO(image_dict[base_ip]))
+    other_image = Image.open(BytesIO(image_dict[other_ip]))
     diff = ImageChops.difference(base_image, other_image)
     filename = compute_filename(url, base_ip, other_ip)
     diff.save(filename)
