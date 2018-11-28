@@ -12,11 +12,14 @@ import { SITES } from '../mock-sites';
 })
 export class SearchComponent implements OnInit {
     default = "example.com";
+    api_url = "localhost:8000";
     sites: Site[];
     activeid = 1;
     response: Response;
     ips: string[];
-    diff_ips: string[]
+    diff_ips: string[];
+    image_urls: string[];
+    image_diff_urls: string[];
     search_url: string;
     form: FormGroup;
     model = new Search("www.nytimes.com");

@@ -39,9 +39,9 @@
 <div style="display: none" id="res3">
   <h2>Images</h2>
   <ul class="sites">
-    <li *ngFor="let ip of diff_ips; index as i">
+    <li *ngFor="let img of image_urls; index as i">
      <h3>{{ip}}</h3>
-     <div class="code" id="contdiff{{i}}" [innerHTML]="response.diff[ip]"> </div>
+     <div class="code" ><img [src]="img"> </div>
      <!-- <img src = {{site.img_url}}> -->
     </li>
   </ul>
@@ -49,9 +49,9 @@
 <div style="display: none" id="res4">
   <h2>Image Diffs</h2>
   <ul class="sites">
-    <li *ngFor="let ip of diff_ips; index as i">
+    <li *ngFor="let img of image_diff_urls; index as i">
      <h3>{{ip}}</h3>
-     <div class="code" id="contdiff{{i}}" [innerHTML]="response.diff[ip]"> </div>
+     <div class="code" ><img [src]="img"> </div>
      <!-- <img src = {{site.img_url}}> -->
     </li>
   </ul>
