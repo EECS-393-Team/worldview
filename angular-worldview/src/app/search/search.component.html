@@ -7,12 +7,52 @@
       <p>{{ output_text }}</p>
   </form>
 </div>
-<div>
+<div id="selector" style="display: none">
+   <button class="button" (click)="showResultDiv(1)">HTML</button>
+   <button class="button" (click)="showResultDiv(2)">HTML Diffs</button>
+   <button class="button" (click)="showResultDiv(3)">Images</button>
+   <button class="button" (click)="showResultDiv(4)">Image Diffs</button>
+</div>
+<br>
+<br>
+
+<div style="display: none" id="res1">
+  <h2>Raw HTML</h2>
 	<ul class="sites">
 	  <li *ngFor="let ip of ips; index as i">
-	   <h3><!-- {{site.url}} at {{site.location}} --></h3>
+	   <h3>{{ip}}</h3>
 	   <p class="code collapsible" (click)="toggleCollapse([i])" id="cont{{i}}"> {{response.html[ip]}}</p>
      <!-- <img src = {{site.img_url}}> -->
 	  </li>
 	</ul>
+</div>
+<div style="display: none" id="res2">
+  <h2>HTML Diffs</h2>
+  <ul class="sites">
+    <li *ngFor="let ip of diff_ips; index as i">
+     <h3>{{ip}}</h3>
+     <div class="code" id="contdiff{{i}}" [innerHTML]="response.diff[ip]"> </div>
+     <!-- <img src = {{site.img_url}}> -->
+    </li>
+  </ul>
+</div>
+<div style="display: none" id="res3">
+  <h2>Images</h2>
+  <ul class="sites">
+    <li *ngFor="let ip of diff_ips; index as i">
+     <h3>{{ip}}</h3>
+     <div class="code" id="contdiff{{i}}" [innerHTML]="response.diff[ip]"> </div>
+     <!-- <img src = {{site.img_url}}> -->
+    </li>
+  </ul>
+</div>
+<div style="display: none" id="res4">
+  <h2>Image Diffs</h2>
+  <ul class="sites">
+    <li *ngFor="let ip of diff_ips; index as i">
+     <h3>{{ip}}</h3>
+     <div class="code" id="contdiff{{i}}" [innerHTML]="response.diff[ip]"> </div>
+     <!-- <img src = {{site.img_url}}> -->
+    </li>
+  </ul>
 </div>

@@ -49,7 +49,11 @@ def diff_html(html_dict, base_ip, other_ip):
     Uses difflib to construct a table that is the difference between the base and
     all of the other returned html
     """
-    return HtmlDiff.make_table(html_dict[base_ip], html_dict[other_ip])
+    diff = HtmlDiff(wrapcolumn=60)
+    return diff.make_table(
+        fromlines=html_dict[base_ip].splitlines(),
+        tolines=html_dict[other_ip].splitlines(),
+    )
 
 
 def diff_image(image_dict, base_ip, other_ip, url):
