@@ -28,12 +28,11 @@ def get_url(request, url):
     response_iter = iter(all_responses)
     base_ip = next(response_iter)
     diff_responses = {base_ip: ""}
-    image_diff_responses = {base_ip: image_responses[base_ip]}
+    image_responses[base_ip].save(compute_filename(url, base_ip, base_ip))
+    image_diff_responses = {base_ip: compute_filename(url, base_ip, base_ip)}
     for ip in response_iter:
-        diff_responses[ip] = diff_html(all_responses[base_ip], all_responses[ip])
-        image_diff_responses[ip] = diff_image(
-            image_responses[base_ip], image_responses[ip]
-        )
+        diff_responses[ip] = diff_html(all_responses, base_ip, ip)
+        image_diff_responses[ip] = diff_image(image_responses, base_ip, ip, url)
     total_responses = {
         "html": all_responses,
         "diff": diff_responses,
@@ -45,18 +44,27 @@ def get_url(request, url):
     return response
 
 
-def diff_html(base, other):
+def diff_html(html_dict, base_ip, other_ip):
     """
     Uses difflib to construct a table that is the difference between the base and
     all of the other returned html
     """
-    return HtmlDiff.make_table(base, other)
+    return HtmlDiff.make_table(html_dict[base_ip], html_dict[other_ip])
 
 
-def diff_image(base, other):
+def diff_image(image_dict, base_ip, other_ip, url):
     """
     Uses pillow's image diffing feature to compare the two screenshots returns a file
     """
-    base_image = Image.open(base)
-    other_image = Image.open(other)
-    return ImageChops.difference(base_image, other_image)
+    base_image = Image.open(image_dict[base_ip])
+    other_image = Image.open(image_dict[other_ip])
+    diff = ImageChops.difference(base_image, other_image)
+    filename = compute_filename(url, base_ip, other_ip)
+    diff.save(filename)
+
+
+def compute_filename(url, base_ip, other_ip):
+    """
+    Computes a string which corresponds to where the image diff will be stored
+    """
+    return f"{url}_{base_ip}_{other_ip}"
