@@ -13,6 +13,7 @@ import { SITES } from '../mock-sites';
 export class SearchComponent implements OnInit {
     default = "example.com";
     sites: Site[];
+    activeid = 1;
     response: Response;
     ips: string[];
     diff_ips: string[]
@@ -37,6 +38,9 @@ export class SearchComponent implements OnInit {
             this.output_text = "Please enter a valid url";
         }
         else{
+            document.getElementById("selector").style.display = "";
+            console.log("res"+this.activeid);
+            document.getElementById("res"+this.activeid).style.display = "";
             this.output_text = "";
             this.sitesService.getSites(url).subscribe(response => {
                                                                 this.response = response;
@@ -67,4 +71,11 @@ export class SearchComponent implements OnInit {
             document.getElementById("cont"+id).style.height = "10px";
         }
     }
+
+    showResultDiv(id: number){
+      document.getElementById("res"+this.activeid).style.display = "none";
+      document.getElementById("res"+id).style.display = "";
+      this.activeid = id;
+    }
+
 }
